@@ -93,11 +93,20 @@ function main() {
   console.log(vueRouter)
   walkRouter(vueRouter, function (path, node) {
     if (node.path) {
-      routers.push({name: node.name, path})
+      routers.push(path)
     }
   })
 
   return routers
 }
 
-console.table(main())
+const app = document.querySelector('#app').__vue__;
+
+const routePaths = main();
+
+routePaths.forEach((path, index) => {
+  setTimeout(() => {
+    console.log(`Navigating to ${path}`);
+    app.$router.push(path);
+  }, index * 30000);
+});
